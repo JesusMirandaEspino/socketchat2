@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+<!-- **************************  -->
+<!-- **************************  -->
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+     <meta name="author" content="Jesus Miranda">
+<!-- **************************  -->
+<!-- **************************  -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="INDEX,FOLLOW">
+
+    <meta name="google-signin-client_id" content="138391390360-69ufp7409ckjhftu7u7jqfesb7kq2n72.apps.googleusercontent.com">
+
+
+<!-- **************************  -->
+<!-- **************************  -->
+
+
+    <link rel="stylesheet" href="assets/css/all.css">
+    <link rel="stylesheet" href="assets/css/reset.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+    <link rel="stylesheet" href="assets/css/estilos.css">  
+
+
+<!-- **************************  -->
+<!-- **************************  -->    
+<link rel="icon" type="image/png" href="">
+<!-- **************************  -->
+<!-- **************************  -->
+    <title>Google sign in</title>
+
+    
+</head>
+<body>
+    
+<!-- **************************  -->
+<!-- **************************  -->
+    <header>
+
+        <h1>Google sign in</h1>
+
+    </header>
+
+
+<!-- **************************  -->
+<!-- **************************  -->
+    <main>
+<div class="g-signin2" data-onsuccess="onSignIn"></div>
+
+    </main>
+
+
+<!-- **************************  -->
+<!-- **************************  -->
+    <footer>
+<a href="#" onclick="signOut();">Sign out</a>
+
+    </footer>
+
+
+</body>
+
+
+
+
+
+
+<script>
+
+    var url = (  window.location.hostname.includes('localhost') ) ? 'http://localhost:8081/api/auth/google' : 'http://localhost:8081/api/auth/google';
+
+
+function onSignIn(googleUser) {
+  var profile = googleUser.getBasicProfile();
+  console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+  console.log('Name: ' + profile.getName());
+  console.log('Image URL: ' + profile.getImageUrl());
+  console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+
+    var id_token = googleUser.getAuthResponse().id_token;
+    const data = {  id_token }
+
+    fecth( url,  {
+        method: 'POST',
+        headers: { 'Content-Type' : 'application/json' },
+        body: JSON.stringify( data )
+    }).then( resp => resp.json )
+    .then( data => console.log( 'Nuestro server', data ) )
+    .catch(  console.log );
+
+}
+
+//npm install google-auth-library --save
+
+    function signOut() {
+        var auth2 = gapi.auth2.getAuthInstance();
+        auth2.signOut().then(function () {
+        console.log('User signed out.');
+        });
+
+
+  }
+</script>
+
+
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+
+
+</html>
