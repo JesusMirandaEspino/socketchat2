@@ -1,10 +1,10 @@
 const { Router } = require( 'express' );
 const { check } = require('express-validator');
 
+const { validarJWT, validarCampos  } = require('../middlewares');
 
-const { validarCampos } = require('../middlewares/validar.js');
 
-const { login, googleSignIng } = require('../controller/auth');
+const { login, googleSignIng, renovarToken } = require('../controller/auth');
 
 
 const router = Router();
@@ -20,6 +20,9 @@ const router = Router();
         validarCampos,
         googleSignIng
     ] ,  login  );
+
+
+    router.get('/', validarJWT, renovarToken );
 
 
 

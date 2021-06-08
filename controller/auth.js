@@ -116,11 +116,27 @@ const googleSignIng = async ( req, res = response ) => {
 
     console.log( user );
 
+}
+
+
+
+const renovarToken =  async  (  req, res = response ) => {
+    const {  user } = req;
+
+    //  generarJWT
+    const token = await generarJWT( user.id );
+
+    res.json({
+        user,
+        token
+    });
+
 
 
 }
 
 module.exports = {
     login,
-    googleSignIng
+    googleSignIng,
+    renovarToken
 }
