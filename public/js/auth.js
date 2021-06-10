@@ -30,9 +30,7 @@
             } )
             .then( resp => resp.json() )
             .then( ({ msg, token }) => {
-                if( msg ){
-                    return console.error(msg);
-                }
+                if( msg ){ return console.error( msg ); }
                 localStorage.setItem( 'token', token );
             } )
             .catch( err => console.log( err ) );
@@ -47,10 +45,10 @@
         function onSignIn(googleUser) {
 
             var profile = googleUser.getBasicProfile();
-            console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-            console.log('Name: ' + profile.getName());
-            console.log('Image URL: ' + profile.getImageUrl());
-            console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+            //  console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+            // console.log('Name: ' + profile.getName());
+            // console.log('Image URL: ' + profile.getImageUrl());
+            // console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
 
             var id_token = googleUser.getAuthResponse().id_token;
             const data = { id_token };
@@ -63,7 +61,6 @@
             .then( resp => resp.json() )
             .then( ( { token } ) => {
                 localStorage.setItem( 'token', token );
-                console.log( token );
             } )
             .catch( console.log );
             
